@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import CustomerButton from './button';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +41,7 @@ class App extends Component {
 
   onClick(e) {
     let result = 0;
-    let inputNum = e.target.value;
+    let inputNum = e;
 
     if (inputNum === "+") {
       this.setState({ operate: "+" });
@@ -70,21 +72,21 @@ class App extends Component {
     return (
       <div>
         <input type="text" value={this.state.showText} /><br />
-        <button value="7" onClick={this.onClick}>7</button>
-        <button value="8" onClick={this.onClick}>8</button>
-        <button value="9" onClick={this.onClick}>9</button><br />
-        <button value="4" onClick={this.onClick}>4</button>
-        <button value="5" onClick={this.onClick}>5</button>
-        <button value="6" onClick={this.onClick}>6</button><br />
-        <button value="1" onClick={this.onClick}>1</button>
-        <button value="2" onClick={this.onClick}>2</button>
-        <button value="3" onClick={this.onClick}>3</button><br />
-        <button value="+" onClick={this.onClick}>+</button>
-        <button value="-" onClick={this.onClick}>-</button>
-        <button value="=" onClick={this.onClick}>=</button>
-        <button value="c" onClick={this.onClick}>c</button><br />
+        <CustomerButton data="7" delegateFun={this.onClick} />
+        <CustomerButton data="8" delegateFun={this.onClick} />
+        <CustomerButton data="9" delegateFun={this.onClick} /><br />
+        <CustomerButton data="4" delegateFun={this.onClick} />
+        <CustomerButton data="5" delegateFun={this.onClick} />
+        <CustomerButton data="6" delegateFun={this.onClick} /><br />
+        <CustomerButton data="1" delegateFun={this.onClick} />
+        <CustomerButton data="2" delegateFun={this.onClick} />
+        <CustomerButton data="3" delegateFun={this.onClick} /><br />
+        <CustomerButton data="+" delegateFun={this.onClick} />
+        <CustomerButton data="-" delegateFun={this.onClick} />
+        <CustomerButton data="=" delegateFun={this.onClick} /><br />
+        <CustomerButton data="c" delegateFun={this.onClick} />
         <hr />
-        
+
         <select name="calcContext" multiple="multiple" style={{ width: 200, height: 300 }}   >
           {calcList}
         </select>
