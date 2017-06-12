@@ -16,7 +16,7 @@ class App extends Component {
   //移除選取的計算內容
   onChange = (e) => {
     let items = this.state.items;
-    delete items[e];
+    items.splice(e,1);
     this.setState({ items: items });
     let result = this.calcNum();
     this.setState({ showText: result });
@@ -69,22 +69,20 @@ class App extends Component {
       return <option value={obj.num} key={index} onClick={() => this.onChange(index)}>value:{obj.num}, operate:{obj.operate}</option>
     })
 
+     //劃出計算機按鈕
+    let numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '+', '-', '=', 'c'];
+    let btnList = [];
+    for (let i = 1; i <= numbers.length; i++) {
+      btnList.push(<CustomerButton data={numbers[i - 1]} delegateFun={this.onClick} />)
+      if (i % 3 === 0) {
+        btnList.push(<br />)
+      }
+    }
+
     return (
       <div>
         <input type="text" value={this.state.showText} /><br />
-        <CustomerButton data="7" delegateFun={this.onClick} />
-        <CustomerButton data="8" delegateFun={this.onClick} />
-        <CustomerButton data="9" delegateFun={this.onClick} /><br />
-        <CustomerButton data="4" delegateFun={this.onClick} />
-        <CustomerButton data="5" delegateFun={this.onClick} />
-        <CustomerButton data="6" delegateFun={this.onClick} /><br />
-        <CustomerButton data="1" delegateFun={this.onClick} />
-        <CustomerButton data="2" delegateFun={this.onClick} />
-        <CustomerButton data="3" delegateFun={this.onClick} /><br />
-        <CustomerButton data="+" delegateFun={this.onClick} />
-        <CustomerButton data="-" delegateFun={this.onClick} />
-        <CustomerButton data="=" delegateFun={this.onClick} /><br />
-        <CustomerButton data="c" delegateFun={this.onClick} />
+        {btnList}
         <hr />
 
         <select name="calcContext" multiple="multiple" style={{ width: 200, height: 300 }}   >
