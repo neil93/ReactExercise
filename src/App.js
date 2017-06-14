@@ -15,8 +15,10 @@ class App extends Component {
   //arrow function寫法，可用在auto bind 就可以不用在constructor寫bind直接使用就好
   //移除選取的計算內容
   onChange = (e) => {
-    let items = this.state.items;
+    //let items = this.state.items 這件事情會有 instance 的問題，建議先 clone 一份出來再做處理，處理完畢再塞回 state！
+    let items = Object.assign([],this.state.items);
     items.splice(e,1);
+
     this.setState({ items: items });
     let result = this.calcNum();
     this.setState({ showText: result });
@@ -25,7 +27,9 @@ class App extends Component {
   //計算邏輯，將陣列內容取出並做計算
   calcNum = () => {
     let result = 0;
-    this.state.items.map(function (obj) {
+
+    //Map 用ES6方式改寫
+    this.state.items.map((obj)=>{
       let opearte = obj.operate;
       let num = parseInt(obj.num);
       if (opearte === "+") {
@@ -35,31 +39,35 @@ class App extends Component {
       }
       return result;
     })
+
     return result;
   }
-
 
   onClick(e) {
     let result = 0;
     let inputNum = e;
-
-    if (inputNum === "+") {
-      this.setState({ operate: "+" });
-    } else if (inputNum === "-") {
-      this.setState({ operate: "-" });
-    } else if (inputNum === "c") {
-      this.setState({ showText: '', items: [], operate: "+" });
-    } else if (inputNum === "=") {
-      //計算結果
-      result = this.calcNum();
-      this.setState({ showText: result });
-    } else {
-      var calcContext = {
-        num: inputNum,
-        operate: this.state.operate,
-      }
-      var items = this.state.items.concat(calcContext);
-      this.setState({ items: items, showText: inputNum });
+    switch(inputNum){
+      case "+":
+        this.setState({ operate: "+" });
+        break;
+      case "-":
+        this.setState({ operate: "-" });
+        break;
+      case "c":
+        this.setState({ showText: '', items: [], operate: "+" });
+        break;
+      case "=":
+        //計算結果
+        result = this.calcNum();
+        this.setState({ showText: result });
+        break;
+      default :
+        var calcContext = {
+          num: inputNum,
+          operate: this.state.operate,
+        }
+        var items = this.state.items.concat(calcContext);
+        this.setState({ items: items, showText: inputNum });
     }
   }
 
