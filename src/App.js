@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CustomerButton from './button';
+import buttons from './calculatorConfig';
 
 class App extends Component {
   constructor(props) {
@@ -78,12 +79,11 @@ class App extends Component {
     })
 
      //劃出計算機按鈕
-    let numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '+', '-', '=', 'c'];
     let btnList = [];
-    for (let i = 1; i <= numbers.length; i++) {
-      btnList.push(<CustomerButton data={numbers[i - 1]} delegateFun={this.onClick} />)
+    for (let i = 1; i <= buttons.length; i++) {
+      btnList.push(<CustomerButton key={i} data={buttons[i - 1]} delegateFun={this.onClick} />)
       if (i % 3 === 0) {
-        btnList.push(<br />)
+        btnList.push(<br key={'br_' + i} />)
       }
     }
 
